@@ -1,38 +1,46 @@
+var mouseevent = "empty"
+
 var canvas = document.getElementById("myCanvas")
 var ctx = canvas.getContext("2d")
 
-ctx.beginPath()
-ctx.strokeStyle = "grey"
-ctx.lineWidth = 4
-ctx.rect(150,143,430,200)
-ctx.stroke()
+canvas.addEventListener("mousedown",my_mouse_down)
 
-ctx.beginPath()
-ctx.strokeStyle = "blue"
-ctx.lineWidth = 5
-ctx.arc(250,210,40,-10, 2 * Math.PI);
-ctx.stroke()
+function my_mouse_down(e){
+    color=document.getElementById("color").value
+    width=document.getElementById("width").value
+    radius=document.getElementById("radius").value
 
-ctx.beginPath()
-ctx.strokeStyle = "black"
-ctx.lineWidth = 5
-ctx.arc(350,210,40,0, 2 * Math.PI);
-ctx.stroke()
+    mouseevent="mousedown"  
+}
 
-ctx.beginPath()
-ctx.strokeStyle = "red"
-ctx.lineWidth = 5
-ctx.arc(450,210,40,-10, 2 * Math.PI);
-ctx.stroke()
+canvas.addEventListener("mouseup",my_mouse_up)
 
-ctx.beginPath()
-ctx.strokeStyle = "yellow"
-ctx.lineWidth = 5
-ctx.arc(300,250,40,0, 2 * Math.PI);
-ctx.stroke()
+function my_mouse_up(e){
+    mouseevent="mouseup"  
+}
+canvas.addEventListener("mouseleave",my_mouse_leave)
 
-ctx.beginPath()
-ctx.strokeStyle = "green"
-ctx.lineWidth = 5
-ctx.arc(400,250,40,-10, 2 * Math.PI);
-ctx.stroke()
+function my_mouse_leave(e){
+    mouseevent="mouseleave"  
+}
+canvas.addEventListener("mousemove",my_mouse_move)
+
+function my_mouse_move(e){
+    var currentx =e.clientX-canvas.offsetLeft
+    var currenty = e.clientY-canvas.offsetTop
+
+    if(mouseevent=="mousedown"){
+        console.log("current position of x and y cordinates = ")
+        console.log("x = "+ current_position_of_mouse_x + "y = " + current_position_of_mouse_y)
+        ctx.beginPath()
+        ctx.strokeStyle = color
+        ctx.lineWidth = width
+        ctx.arc(current_position_of_mouse_x, current_position_of_mouse_y, radius,0,2*Math.PI)
+        ctx.stroke()
+    }
+  
+}
+
+function clearArea(){
+    ctx.clearRect(0,0,canvas.width,canvas.height)
+}
